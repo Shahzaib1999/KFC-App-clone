@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, Button, TouchableOpacity, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons';
 
-export default class BucketScreen extends Component {
+class BucketScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -10,17 +11,21 @@ export default class BucketScreen extends Component {
         };
     }
 
-    static getDerivedStateFromProps(){
-        console.log("getDerivedStateFromProps ")
-        return null;
-    }
+    // static getDerivedStateFromProps(){
+    //     console.log("getDerivedStateFromProps ")
+    //     return null;
+    // }
 
     async componentDidMount() {
 
-        const value = await AsyncStorage.getItem('data').then(req => JSON.parse(req))
-            .then(json => console.log(json))
-            .catch(error => console.log('error!'));
+        // const value = await AsyncStorage.getItem('data').then(req => JSON.parse(req))
+        //     .then(json => console.log(json))
+        //     .catch(error => console.log('error!'));
 
+    }
+
+    componentWillReceiveProps(nextProp){
+        console.log('bucket************',nextProp.ORDER)
     }
 
     render() {
@@ -55,3 +60,12 @@ const styles = StyleSheet.create({
 BucketScreen.navigationOptions = {
     header: null,
 };
+
+
+function mapStateToProps(states) {
+    return ({
+        ORDER: states.reducer.Order
+    })
+}
+
+export default connect(mapStateToProps)(BucketScreen);

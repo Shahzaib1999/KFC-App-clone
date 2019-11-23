@@ -1,56 +1,62 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
-import * as firebase from 'firebase';
-import 'firebase/firestore';
+import { connect } from 'react-redux'
+import { updateOrder, getData } from "../store/actions/Actions";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            items: [],
-            storage: []
+            items: []
         }
 
 
     }
 
-    
+
 
     async componentDidMount() {
 
-        const value = await AsyncStorage.getItem('data').then(req => JSON.parse(req))
-            .then(json => this.setState({ storage: [...this.state.storage, json] }))
-            .catch(error => console.log('error!'));;
+        // const value = await AsyncStorage.getItem('data').then(req => JSON.parse(req))
+        //     .then(json => this.setState({ storage: [...this.state.storage, json] }))
+        //     .catch(error => console.log('error!'));;
 
     }
 
     componentWillMount() {
+        console.log(this.props.getData())
+        // const db = firebase.firestore();
 
-        const db = firebase.firestore();
+        // db.collection('menu').onSnapshot(data => {
+        //     if (data.size) {
+        //         data.forEach(item => {
+        //             let obj = {
+        //                 id: item.id,
+        //                 name: item.data().name,
+        //                 price: item.data().price,
+        //                 img: item.data().image
+        //             }
+        //             this.setState({ items: [...this.state.items, obj] });
+        //         })
 
-        db.collection('menu').onSnapshot(data => {
-            if (data.size) {
-                data.forEach(item => {
-                    let obj = {
-                        id: item.id,
-                        name: item.data().name,
-                        price: item.data().price,
-                        img: item.data().image
-                    }
-                    this.setState({ items: [...this.state.items, obj] });
-                })
-
-            }
-        })
+        //     }
+        // })
     }
 
     async addToCart(id) {
-        let cart = [...this.state.storage,id];
-        await AsyncStorage.setItem('data', JSON.stringify(cart));
+        this.props.upd(id);
+    }
+
+    componentWillReceiveProps(nextProp) {
+        console.log(nextProp)
+        this.setState({
+            items: nextProp.DEALS
+        })
+        console.log('componentWillReceiveProps');
     }
 
     render() {
@@ -104,6 +110,26 @@ export default class Home extends React.Component {
         );
     }
 }
+
+function mapStateToProps(states) {
+    return ({
+        ORDER: states.reducer.Order,
+        DEALS: states.reducer.Deals
+    })
+}
+function mapDispatchToProps(dispatch) {
+    return ({
+        upd: (ele) => {
+            dispatch(updateOrder(ele))
+        },
+        getData: () => {
+            dispatch(getData())
+        }
+    })
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 Home.navigationOptions = {
     header: null,
