@@ -115,8 +115,8 @@ More.navigationOptions = {
 };
 
 export default AppTabNavigator = createBottomTabNavigator({
+    Bucket: Bucket,
     Home: Home,
     Menu: Menu,
-    Bucket: Bucket,
     More: More
 });

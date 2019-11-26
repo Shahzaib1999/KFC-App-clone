@@ -11,9 +11,14 @@ export default (state = initialState, action) => {
         case 'ORDER':
             state = {
                 ...state,
-                Order: [...state.Order,action.payload]
+                Order: [...state.Order, action.payload]
             }
             break;
+        case 'CLEAN':
+            state = {
+                ...state,
+                Order: []
+            }
         case 'GETDATA':
             state = {
                 ...state,

@@ -28,7 +28,8 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props.getData())
+        this.props.getData()
+        // console.log(this.props.getData())
         // const db = firebase.firestore();
 
         // db.collection('menu').onSnapshot(data => {
@@ -47,19 +48,22 @@ class Home extends React.Component {
         // })
     }
 
-    async addToCart(id) {
+    addToCart(id) {
         this.props.upd(id);
     }
 
     componentWillReceiveProps(nextProp) {
-        console.log(nextProp)
-        this.setState({
-            items: nextProp.DEALS
-        })
-        console.log('componentWillReceiveProps');
+        if (nextProp && nextProp.DEALS && (nextProp.DEALS.length != this.state.items.length)) {
+            this.setState({
+                items: nextProp.DEALS
+            });
+        };
+        console.log('componentWillReceiveProps home');
     }
 
     render() {
+        // console.log('bucket************', this.props)
+
         return (
             <ScrollView >
                 <View style={styles.container}>
@@ -72,7 +76,7 @@ class Home extends React.Component {
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                             {
                                 this.state.items.map((item, key) =>
-                                    <TouchableOpacity key={key} onPress={() => this.addToCart(item.id)}>
+                                    <TouchableOpacity key={key} onPress={() => this.addToCart(item)}>
                                         <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 5, }}>
                                             <Image
                                                 resizeMode="stretch"
@@ -111,12 +115,17 @@ class Home extends React.Component {
     }
 }
 
+Home.navigationOptions = {
+    header: null,
+};
+
 function mapStateToProps(states) {
     return ({
         ORDER: states.reducer.Order,
         DEALS: states.reducer.Deals
     })
 }
+
 function mapDispatchToProps(dispatch) {
     return ({
         upd: (ele) => {
@@ -131,9 +140,6 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
-Home.navigationOptions = {
-    header: null,
-};
 
 const styles = StyleSheet.create({
     container: {
