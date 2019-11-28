@@ -5,9 +5,10 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import { MaterialIcons, Entypo, Feather } from '@expo/vector-icons';
 import TabBarIcon from '../components/TabBarIcon';
-import  Colors  from '../constants/Color';
+import Colors from '../constants/Color';
 import MenuScreen from '../screens/MenuScreen';
 import BucketScreen from '../screens/BucketScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
 
 const config = Platform.select({
     web: { headerMode: 'screen' },
@@ -59,14 +60,15 @@ Menu.navigationOptions = {
             style={{ marginBottom: -3 }}
             focused={focused}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-            
+
         />
     ),
 };
 
 const Bucket = createStackNavigator(
     {
-        screen: BucketScreen,
+        bucket: BucketScreen,
+        checkout: CheckoutScreen,
     },
     config
 );
@@ -84,7 +86,7 @@ Bucket.navigationOptions = {
             style={{ marginBottom: -3 }}
             focused={focused}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-            
+
         />
     ),
 };
@@ -109,14 +111,14 @@ More.navigationOptions = {
             style={{ marginBottom: -3 }}
             focused={focused}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-            
+
         />
     ),
 };
 
 export default AppTabNavigator = createBottomTabNavigator({
-    Bucket: Bucket,
     Home: Home,
     Menu: Menu,
+    Bucket: Bucket,
     More: More
 });

@@ -9,7 +9,7 @@ const list = [
         avatar_url: <MaterialCommunityIcons
             name="food"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     },
@@ -19,7 +19,7 @@ const list = [
         avatar_url: <MaterialCommunityIcons
             name="food-variant"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -30,7 +30,7 @@ const list = [
         avatar_url: <AntDesign
             name="dropbox"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -41,7 +41,7 @@ const list = [
         avatar_url: <Ionicons
             name="ios-people"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -52,7 +52,7 @@ const list = [
         avatar_url: <AntDesign
             name="qrcode"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -63,7 +63,7 @@ const list = [
         avatar_url: <MaterialCommunityIcons
             name="clock"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -74,7 +74,7 @@ const list = [
         avatar_url: <MaterialCommunityIcons
             name="food-fork-drink"
             size={30}
-            color= 'grey'
+            color='grey'
             style={{ marginBottom: 3 }}
         />
     }
@@ -97,8 +97,8 @@ class MenuScreen extends Component {
                     {
                         list.map((l, i) => (
                             <ListItem
+                                onPress={() => this.props.navigation.navigate('Home')}
                                 key={i}
-                                // leftAvatar={{ source: { uri: l.avatar_url } }}
                                 title={l.name}
                                 leftIcon={l.avatar_url}
                                 style={{ paddingTop: 10, }}
